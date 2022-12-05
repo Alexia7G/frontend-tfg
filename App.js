@@ -109,8 +109,6 @@ export default function App() {
               options={{
                 headerShown: false,
                 title: "",
-                tabBarActiveTintColor: Colores.rosaActivo,
-                tabBarInactiveTintColor: Colores.rosaInactivo,
                 tabBarIcon: ({ focused }) => (
                   <IconoMas
                     style={[
