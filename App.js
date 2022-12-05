@@ -1,11 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, ImageBackground, Pressable, Image } from "react-native";
+import { StyleSheet, ImageBackground } from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabBarHeightCallbackContext,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import IconoFavoritos from "./componentes/IconoFavoritos";
+import IconoMas from "./componentes/IconoMas";
 
 import InicioScreen from "./screens/InicioScreen";
 import MapaScreen from "./screens/MapaScreen";
@@ -90,7 +94,30 @@ export default function App() {
                 title: "FAVORITOS",
                 headerShown: false,
                 tabBarIcon: ({ focused }) => (
-                  <IconoFavoritos style={ focused ? styles.activo : styles.inactivo} />
+                  <IconoFavoritos
+                    style={[
+                      focused ? styles.activo : styles.inactivo,
+                      styles.tamFavorito,
+                    ]}
+                  />
+                ),
+              }}
+            />
+            <BottonTab.Screen
+              name="Agregar"
+              component={CuentaScreen}
+              options={{
+                headerShown: false,
+                title: "",
+                tabBarActiveTintColor: Colores.rosaActivo,
+                tabBarInactiveTintColor: Colores.rosaInactivo,
+                tabBarIcon: ({ focused }) => (
+                  <IconoMas
+                    style={[
+                      focused ? styles.activo : styles.inactivo,
+                      styles.flotante,
+                    ]}
+                  />
                 ),
               }}
             />
@@ -109,13 +136,18 @@ const styles = StyleSheet.create({
   },
   activo: {
     opacity: 1,
-    width: 28,
-    height: 28,
   },
   inactivo: {
     opacity: 0.6,
+  },
+  tamFavorito: {
     width: 28,
     height: 28,
   },
+  flotante: {
+    position: "absolute",
+    top: -25,
+    width: 50,
+    height: 50,
+  },
 });
-//<IconoFavoritos />

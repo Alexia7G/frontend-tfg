@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable, Image, Text } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import React from "react";
 
 const IconoFavoritos = ({ style }) => {
