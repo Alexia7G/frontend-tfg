@@ -1,13 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, ImageBackground } from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import {
-  BottomTabBarHeightCallbackContext,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+
 import IconoFavoritos from "./componentes/IconoFavoritos";
 import IconoMas from "./componentes/IconoMas";
 
@@ -96,7 +94,7 @@ export default function App() {
                 tabBarIcon: ({ focused }) => (
                   <IconoFavoritos
                     style={[
-                      focused ? styles.activo : styles.inactivo,
+                      focused ? styles.activo : styles.inactivo2,
                       styles.tamFavorito,
                     ]}
                   />
@@ -136,6 +134,9 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   inactivo: {
+    opacity: 0.8,
+  },
+  inactivo2: {
     opacity: 0.6,
   },
   tamFavorito: {
