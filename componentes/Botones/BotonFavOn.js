@@ -4,7 +4,7 @@ import React from 'react'
 const BotonFavOn = ({ style }) => {
   return (
     <Pressable style={({ pressed }) => pressed && styles.pressed}>
-      <Image source={require("../../assets/images/favOff.png")} style={style} />
+      <Image source={require("../../assets/images/favOn.png")} style={style} />
     </Pressable>
   )
 }
