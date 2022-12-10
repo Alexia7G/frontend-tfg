@@ -16,7 +16,6 @@ const Card = () => {
           source={require("../assets/images/restaurant.jpg")}
         />
         <Estrellas />
-        <Text style={styles.cantidad}>Cantidad de calificaciones</Text>
         <Text style={styles.direccion}>Dirección 1234</Text>
       </View>
     </Pressable>
@@ -50,12 +49,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 20,
-  },
-  cantidad: {
-    paddingHorizontal: 3,
-    textAlign: "center",
-    color: "white",
-    fontSize: 10,
   },
   direccion: {
     paddingHorizontal: 3,

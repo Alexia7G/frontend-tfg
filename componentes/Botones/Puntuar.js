@@ -1,26 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import Colores from "../Constantes/colores";
+import Colores from "../../Constantes/colores";
 
-const Estrellas = ({ style, size }) => {
+const Puntuar = ({ style, size }) => {
   return (
     <View style={style}>
       <View style={styles.contenedor}>
         <Ionicons
-          name="star"
+          name="star-outline"
           size={size}
           color={Colores.amarillo}
           style={styles.estrella}
         />
         <Ionicons
-          name="star"
-          size={size}
-          color={Colores.amarillo}
-          style={styles.estrella}
-        />
-        <Ionicons
-          name="star"
+          name="star-outline"
           size={size}
           color={Colores.amarillo}
           style={styles.estrella}
@@ -37,31 +31,26 @@ const Estrellas = ({ style, size }) => {
           color={Colores.amarillo}
           style={styles.estrella}
         />
-      </View>
-      <View>
-        <Text style={styles.cantidad}>Cantidad de calificaciones</Text>
+        <Ionicons
+          name="star-outline"
+          size={size}
+          color={Colores.amarillo}
+          style={styles.estrella}
+        />
       </View>
     </View>
   );
 };
 
-export default Estrellas;
+export default Puntuar;
 
 const styles = StyleSheet.create({
   contenedor: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    width: '100%',
+    width: "100%",
+    paddingHorizontal: 10,
   },
   estrella: {
     paddingHorizontal: 1,
-    paddingTop: 4,
-  },
-  cantidad: {
-    paddingHorizontal: 3,
-    textAlign: "center",
-    color: "white",
-    fontSize: 10,
   },
 });
