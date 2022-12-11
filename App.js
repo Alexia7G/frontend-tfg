@@ -13,6 +13,8 @@ import InicioScreen from "./screens/InicioScreen";
 import MapaScreen from "./screens/MapaScreen";
 import CuentaScreen from "./screens/CuentaScreen";
 import FavoritosScreen from "./screens/FavoritosScreen";
+import NuevoEstablecimientoScreen from "./screens/NuevoEstablecimientoScreen";
+
 import Colores from "./Constantes/colores";
 
 const BottonTab = createBottomTabNavigator();
@@ -103,7 +105,7 @@ export default function App() {
             />
             <BottonTab.Screen
               name="Agregar"
-              component={CuentaScreen}
+              component={NuevoEstablecimientoScreen}
               options={{
                 headerShown: false,
                 title: "",

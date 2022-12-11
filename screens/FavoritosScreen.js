@@ -22,9 +22,6 @@ const FavoritosScreen = () => {
     </View>
   );
 };
-/*
-
-      */
 
 export default FavoritosScreen;
 
