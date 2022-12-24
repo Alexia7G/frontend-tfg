@@ -1,15 +1,28 @@
-import { StyleSheet, Text, View, ScrollView, Alert } from "react-native";
+import { StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import Input from "../componentes/Input";
 import Colores from "../Constantes/colores";
 import Dropdownlist from "../componentes/Dropdownlist";
-import InputDireccion from "../componentes/InputDireccion";
 import AgregarFotos from "../componentes/Botones/AgregarFotos";
 import BotonPrincipal from "../componentes/Botones/BotonPrincipal";
 import Logo from "../componentes/Logo";
-import { getCategorias, getCiudades, getPaises } from "../api";
+import { getCategorias, getCiudades, guardarEstablecimiento } from "../api";
 
 const NuevoEstablecimientoScreen = () => {
+  const [establecimiento, setEstablecimiento] = useState({
+    nombre: "",
+    categoria: 0,
+    ciudad: 0,
+    calle: "",
+    nroCalle: 0,
+    horarios: "",
+    descripcion: "",
+    telefono: "",
+    insta: "",
+    face: "",
+    web: "",
+  });
+
   //categorias
   const [listaCategorias, setListaCategorias] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState({});
@@ -49,6 +62,18 @@ const NuevoEstablecimientoScreen = () => {
     }
   };
 
+  const nvoEstablecimiento = async () => {
+    try {
+      console.log(establecimiento);
+      await guardarEstablecimiento(establecimiento);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const cambiarDato = (nombre, valor) =>
+    setEstablecimiento({ ...establecimiento, [nombre]: valor });
+
   return (
     <View style={styles.contenedor}>
       <Logo />
@@ -61,30 +86,89 @@ const NuevoEstablecimientoScreen = () => {
             placeholderColor={placeholderColor}
             placeholder="Nombre"
             maxLength={100}
+            value={establecimiento.nombre}
+            onChangeText={(dato) => cambiarDato("nombre", dato)}
           />
           <Dropdownlist
             placeholder="Seleccionar categoría"
             data={listaCategorias}
             setSelected={setCategoriaSeleccionada}
+            onSelect={() => cambiarDato("categoria", categoriaSeleccionada)}
           />
           <Dropdownlist
             placeholder="Seleccionar ciudad"
             data={listaCiudades}
             setSelected={setCiudadSeleccionada}
+            onSelect={() => cambiarDato("ciudad", ciudadSeleccionada)}
+
           />
-          <InputDireccion
-            placeholderCalle="Calle"
-            placeholderColorCalle={placeholderColor}
-            placeholderNro="Número"
-            placeholderColorNro={placeholderColor}
+          <View style={styles.contenedorDireccion}>
+            <TextInput
+              style={styles.calle}
+              autoCorrect={false}
+              placeholder="Calle"
+              placeholderTextColor={placeholderColor}
+              value={establecimiento.calle}
+              onChangeText={(dato) => cambiarDato("calle", dato)}
+            />
+            <TextInput
+              style={styles.numero}
+              autoCorrect={false}
+              placeholder="Número"
+              placeholderTextColor={placeholderColor}
+              keyboardType="number-pad"
+              value={establecimiento.nroCalle}
+              onChangeText={(dato) => cambiarDato("nroCalle", dato)}
+            />
+          </View>
+          <Input
+            placeholderColor={placeholderColor}
+            placeholder="Horarios"
+            maxLength={100}
+            value={establecimiento.horarios}
+            onChangeText={(dato) => cambiarDato("horarios", dato)}
           />
-          <Input placeholderColor={placeholderColor} placeholder="Horarios" />
-          <Input placeholderColor={placeholderColor} placeholder="Teléfono" keyboardType="number-pad" />
-          <Input placeholderColor={placeholderColor} placeholder="Instagram" />
-          <Input placeholderColor={placeholderColor} placeholder="Facebook" />
-          <Input placeholderColor={placeholderColor} placeholder="Página web" keyboardType="url" />
+          <Input
+            placeholderColor={placeholderColor}
+            placeholder="Descripción"
+            maxLength={300}
+            value={establecimiento.descripcion}
+            onChangeText={(dato) => cambiarDato("descripcion", dato)}
+          />
+          <Input
+            placeholderColor={placeholderColor}
+            placeholder="Teléfono"
+            keyboardType="number-pad"
+            maxLength={30}
+            value={establecimiento.telefono}
+            onChangeText={(dato) => cambiarDato("telefono", dato)}
+          />
+          <Input
+            placeholderColor={placeholderColor}
+            placeholder="Instagram"
+            maxLength={150}
+            value={establecimiento.instagram}
+            onChangeText={(dato) => cambiarDato("instagram", dato)}
+            autoCapitalize="none"
+          />
+          <Input
+            placeholderColor={placeholderColor}
+            placeholder="Facebook"
+            maxLength={150}
+            value={establecimiento.facebook}
+            onChangeText={(dato) => cambiarDato("facebook", dato)}
+          />
+          <Input
+            placeholderColor={placeholderColor}
+            placeholder="Página web"
+            keyboardType="url"
+            maxLength={70}
+            value={establecimiento.web}
+            onChangeText={(dato) => cambiarDato("web", dato)}
+            autoCapitalize="none"
+          />
           <AgregarFotos />
-          <BotonPrincipal texto="AGREGAR" />
+          <BotonPrincipal texto="AGREGAR" onPress={nvoEstablecimiento} />
         </ScrollView>
       </View>
     </View>
@@ -111,5 +195,30 @@ const styles = StyleSheet.create({
   titulo: {
     color: "white",
     fontSize: 25,
+  },
+  contenedorDireccion: {
+    flexDirection: "row",
+    width: "100%",
+  },
+  calle: {
+    flex: 3,
+    borderColor: Colores.secundario,
+    borderWidth: 2,
+    borderRadius: 15,
+    backgroundColor: "white",
+    paddingHorizontal: 30,
+    marginVertical: 3,
+    height: 42,
+  },
+  numero: {
+    flex: 1,
+    borderColor: Colores.secundario,
+    borderWidth: 2,
+    borderRadius: 15,
+    backgroundColor: "white",
+    paddingHorizontal: 30,
+    marginVertical: 3,
+    height: 42,
+    marginLeft: 5,
   },
 });
