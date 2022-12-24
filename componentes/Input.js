@@ -1,18 +1,33 @@
-import { StyleSheet, View, TextInput } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import Colores from "../Constantes/colores";
 
-const Input = ({ placeholder, placeholderColor }) => {
+function Input({
+  invalido,
+  placeholder,
+  placeholderColor,
+  autoCapitalize,
+  keyboardType,
+  secure,
+  onChangeText,
+  value,
+  maxLength
+}) {
   return (
-    <View style={styles.contenedor}>
+    <View style={[styles.contenedor, invalido && styles.invalido]}>
       <TextInput
         style={styles.inputStyle}
-        autoCorrect={false}
+        autoCapitalize={autoCapitalize}
+        keyboardType={keyboardType}
+        secureTextEntry={secure}
+        onChangeText={onChangeText}
+        value={value}
         placeholder={placeholder}
-        placeholderTextColor={placeholderColor}
+        placeholderTextColor={invalido ? Colores.invalido : placeholderColor }
+        maxLength={maxLength}
       />
     </View>
   );
-};
+}
 
 export default Input;
 
@@ -30,5 +45,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 20,
     height: 40,
+  },
+  invalido: {
+    borderColor: Colores.invalido,
   },
 });

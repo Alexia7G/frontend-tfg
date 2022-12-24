@@ -2,11 +2,12 @@ import { StyleSheet, Text, Pressable, View } from "react-native";
 import React from "react";
 import Colores from "../../Constantes/colores";
 
-const BotonPrincipal = ({ texto }) => {
+const BotonPrincipal = ({ texto, onPress, style }) => {
   return (
-    <View style={styles.alinear}>
+    <View style={{...styles.alinear, ...style}}>
       <Pressable
         style={({ pressed }) => [styles.contenedor, pressed && styles.pressed]}
+        onPress={onPress}
       >
         <Text style={styles.texto}>{texto}</Text>
       </Pressable>

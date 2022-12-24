@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import CardFavorito from "../componentes/CardFavorito";
+import Logo from "../componentes/Logo";
 
 const FavoritosScreen = () => {
   return (
     <View style={styles.contenedor}>
+      <Logo />
       <View style={styles.fila1}>
         <Text style={styles.titulo}>FAVORITOS</Text>
       </View>

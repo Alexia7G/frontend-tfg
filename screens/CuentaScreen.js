@@ -7,10 +7,12 @@ import Puntuar from "../componentes/Botones/Puntuar";
 import BotonFotos from "../componentes/Botones/BotonFotos";
 import BotonEditar from "../componentes/Botones/BotonEditar";
 import DatosEstablecimiento from "../componentes/DatosEstablecimiento";
+import Logo from "../componentes/Logo";
 
 const CuentaScreen = () => {
   return (
     <View style={styles.contenedor}>
+      <Logo />
       <View style={styles.fila1}>
         <BotonAtras style={styles.botonAtras} />
         <View style={styles.contenedorHeader}>

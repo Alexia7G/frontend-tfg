@@ -17,6 +17,7 @@ const InputDireccion = ({ placeholderCalle, placeholderColorCalle, placeholderNr
         autoCorrect={false}
         placeholder={placeholderNro}
         placeholderTextColor={placeholderColorNro}
+        keyboardType="number-pad"
       />
     </View>
   );

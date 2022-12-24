@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { useCallback, useLayoutEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import Colores from "../Constantes/colores";
+import Logo from "../componentes/Logo";
 
 const MapaScreen = () => {
   //const [selectedLocation, setSelectedLocation] = useState(initialLocation);
@@ -14,16 +15,21 @@ const MapaScreen = () => {
   };
 
   return (
-    <View style={styles.contenedor}>
-      <MapView style={styles.map} initialRegion={region}>
-        <Marker
-          title="Ubi elegida"
-          coordinate={{
-            latitude: region.latitude,
-            longitude: region.longitude,
-          }}
-        />
-      </MapView>
+    <View>
+      <View style={styles.contenedor1}>
+        <Logo />
+      </View>
+      <View style={styles.contenedor2}>
+        <MapView style={styles.map} initialRegion={region}>
+          <Marker
+            title="Ubi elegida"
+            coordinate={{
+              latitude: region.latitude,
+              longitude: region.longitude,
+            }}
+          />
+        </MapView>
+      </View>
     </View>
   );
 };
@@ -34,7 +40,14 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  contenedor: {
+  contenedor1: {
+    //marginTop: 235,
+    //height: 510,
+    borderColor: "black",
+    borderWidth: 2,
+    flex: 1,
+  },
+  contenedor2: {
     marginTop: 235,
     height: 510,
     borderColor: Colores.secundario,

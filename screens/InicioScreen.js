@@ -6,10 +6,12 @@ import InputConIcono from "../componentes/InputConIcono";
 import Card from "../componentes/Card";
 
 import Colores from "../Constantes/colores";
+import Logo from "../componentes/Logo";
 
 const InicioScreen = () => {
   return (
     <View style={styles.contenedorFilas}>
+      <Logo />
       <View style={styles.fila1}>
         <InputConIcono
           icon="search"
@@ -55,7 +57,6 @@ const styles = StyleSheet.create({
   contenedorFilas: {
     marginTop: 25,
     flexDirection: "column",
-    justifyContent: "space-around",
     height: "100%",
   },
   fila1: {
