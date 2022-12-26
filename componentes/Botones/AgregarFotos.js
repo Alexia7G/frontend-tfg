@@ -1,20 +1,105 @@
-import { StyleSheet, Text, View, Pressable, Image } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Image,
+  Alert,
+  FlatList,
+} from "react-native";
+import React, { useState } from "react";
 import Colores from "../../Constantes/colores";
+import {
+  launchImageLibraryAsync,
+  useCameraPermissions,
+  MediaTypeOptions,
+  PermissionStatus,
+} from "expo-image-picker";
 
-const AgregarFotos = () => {
+
+const AgregarFotos = ({imagenesGuardadas, setImagenesGuardadas}) => {
+  
+  const [statusPermisos, requestPermisos] = useCameraPermissions();
+
+  async function verifyPermissions() {
+    if (
+      statusPermisos.status === PermissionStatus.UNDETERMINED ||
+      statusPermisos.status === PermissionStatus.DENIED
+    ) {
+      const permisosResponse = await requestPermisos();
+
+      return permisosResponse.granted;
+    }
+
+    if (statusPermisos.status === PermissionStatus.DENIED) {
+      Alert.alert(
+        "Permisos insuficientes",
+        "Necesitas aceptar los permisos para utilizar la app"
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  const tomarImagen = async () => {
+    const tienePermiso = await verifyPermissions();
+
+    if (!tienePermiso) {
+      return; //sale de la función y no ejecuta lo siguiente porque no hay permisos
+    }
+
+    let imagenes = await launchImageLibraryAsync({
+      mediaTypes: MediaTypeOptions.Images,
+      allowsMultipleSelection: true,
+      selectionLimit: 3,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!imagenes.canceled) {
+      setImagenesGuardadas(
+        imagenes.assets.map((img) => {
+          return img.uri;
+        })
+      );
+    }
+  };
+
   return (
-    <Pressable
-      style={({ pressed }) => [styles.contenedor, pressed && styles.pressed]}
-    >
-      <Text style={styles.texto}>Agregar fotos</Text>
-      <Image
-        source={require("../../assets/images/camara.png")}
-        style={styles.imagen}
-      />
-    </Pressable>
+    <View>
+      <Pressable
+        style={({ pressed }) => [styles.contenedor, pressed && styles.pressed]}
+        onPress={tomarImagen}
+      >
+        <Text style={styles.texto}>Agregar fotos</Text>
+        <Image
+          source={require("../../assets/images/camara.png")}
+          style={styles.imagen}
+        />
+      </Pressable>
+      {imagenesGuardadas.length > 0 &&
+        imagenesGuardadas.map((item, index) => (
+          <Image
+            key={index}
+            source={{ uri: item }}
+            style={styles.imagenSeleccionada}
+          />
+        ))}
+    </View>
   );
 };
+
+{
+  /*
+  {imagenGuardada && (
+        <Image
+          source={{ uri: imagenGuardada }}
+          style={styles.imagenSeleccionada}
+        />
+      )}
+  */
+}
 
 export default AgregarFotos;
 
@@ -46,5 +131,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -6,
     marginLeft: 140,
+  },
+  imagenSeleccionada: {
+    width: 50,
+    height: 50,
+    borderColor: Colores.secundario,
+    borderWidth: 1,
+    borderRadius: 6,
   },
 });

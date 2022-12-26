@@ -1,5 +1,4 @@
-import { StyleSheet, Pressable } from "react-native";
-import React from "react";
+import { StyleSheet, Pressable, Alert } from "react-native";
 import IconoMas from "../IconoMas";
 
 const BotonAgregar = ({ style }) => {

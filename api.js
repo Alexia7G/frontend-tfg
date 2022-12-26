@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL_BASE = "https://a346-190-11-151-195.sa.ngrok.io";
+const URL_BASE = "https://c73f-190-11-151-195.sa.ngrok.io";
 
 // --------------------------USUARIO--------------------------
 async function authenticate(mode, email, password) {
@@ -73,3 +73,4 @@ export const getCiudades = async () => {
   });
   return await res.json();
 };
+

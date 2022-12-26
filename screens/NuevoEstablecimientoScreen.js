@@ -9,6 +9,8 @@ import Logo from "../componentes/Logo";
 import { getCategorias, getCiudades, guardarEstablecimiento } from "../api";
 
 const NuevoEstablecimientoScreen = () => {
+  const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+
   const [establecimiento, setEstablecimiento] = useState({
     nombre: "",
     categoria: 0,
@@ -21,6 +23,7 @@ const NuevoEstablecimientoScreen = () => {
     insta: "",
     face: "",
     web: "",
+    imagenes: [],
   });
 
   //categorias
@@ -64,8 +67,8 @@ const NuevoEstablecimientoScreen = () => {
 
   const nvoEstablecimiento = async () => {
     try {
-      console.log(establecimiento);
-      await guardarEstablecimiento(establecimiento);
+      console.log(JSON.stringify({ ...establecimiento, imagenes: imagenesGuardadas }));
+      //await guardarEstablecimiento({ ...establecimiento, imagenes: imagenesGuardadas });
     } catch (error) {
       console.error(error);
     }
@@ -100,7 +103,6 @@ const NuevoEstablecimientoScreen = () => {
             data={listaCiudades}
             setSelected={setCiudadSeleccionada}
             onSelect={() => cambiarDato("ciudad", ciudadSeleccionada)}
-
           />
           <View style={styles.contenedorDireccion}>
             <TextInput
@@ -147,16 +149,16 @@ const NuevoEstablecimientoScreen = () => {
             placeholderColor={placeholderColor}
             placeholder="Instagram"
             maxLength={150}
-            value={establecimiento.instagram}
-            onChangeText={(dato) => cambiarDato("instagram", dato)}
+            value={establecimiento.insta}
+            onChangeText={(dato) => cambiarDato("insta", dato)}
             autoCapitalize="none"
           />
           <Input
             placeholderColor={placeholderColor}
             placeholder="Facebook"
             maxLength={150}
-            value={establecimiento.facebook}
-            onChangeText={(dato) => cambiarDato("facebook", dato)}
+            value={establecimiento.face}
+            onChangeText={(dato) => cambiarDato("face", dato)}
           />
           <Input
             placeholderColor={placeholderColor}
@@ -167,7 +169,10 @@ const NuevoEstablecimientoScreen = () => {
             onChangeText={(dato) => cambiarDato("web", dato)}
             autoCapitalize="none"
           />
-          <AgregarFotos />
+          <AgregarFotos
+            setImagenesGuardadas={setImagenesGuardadas}
+            imagenesGuardadas={imagenesGuardadas}
+          />
           <BotonPrincipal texto="AGREGAR" onPress={nvoEstablecimiento} />
         </ScrollView>
       </View>
