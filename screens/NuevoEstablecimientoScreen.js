@@ -23,7 +23,6 @@ const NuevoEstablecimientoScreen = () => {
     insta: "",
     face: "",
     web: "",
-    imagenes: [],
   });
 
   //categorias
@@ -67,14 +66,22 @@ const NuevoEstablecimientoScreen = () => {
 
   const nvoEstablecimiento = async () => {
     try {
-      console.log(JSON.stringify({ ...establecimiento, imagenes: imagenesGuardadas }));
-      //await guardarEstablecimiento({ ...establecimiento, imagenes: imagenesGuardadas });
+      const formData = new FormData();
+      formData.append("establecimiento", JSON.stringify(establecimiento));
+
+      let imgData = imagenesGuardadas.map((img, index) => {
+        return { uri: img.uri, base64: img.base64 , name: `imagen_${index}`, type: "image/jpeg" };
+      });
+
+      formData.append("imagenes", JSON.stringify(imgData));
+
+      await guardarEstablecimiento(formData);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const cambiarDato = (nombre, valor) =>
+  const cambiarDato = (nombre, valor) => 
     setEstablecimiento({ ...establecimiento, [nombre]: valor });
 
   return (

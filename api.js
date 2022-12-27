@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL_BASE = "https://c73f-190-11-151-195.sa.ngrok.io";
+const URL_BASE = "https://d170-190-11-151-195.sa.ngrok.io";
 
 // --------------------------USUARIO--------------------------
 async function authenticate(mode, email, password) {
@@ -32,14 +32,15 @@ export const getEstablecimientos = async () => {
   return await res.json();
 };
 
-export const guardarEstablecimiento = async (establecimiento) => {
+export const guardarEstablecimiento = async (data) => {
   const res = await fetch(`${URL_BASE}/lugar/nuevo`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
+      "accept-encoding": "gzip, deflate, br",
     },
-    body: JSON.stringify(establecimiento),
+    body: data,
   });
   return await res.json();
 };
@@ -73,4 +74,3 @@ export const getCiudades = async () => {
   });
   return await res.json();
 };
-

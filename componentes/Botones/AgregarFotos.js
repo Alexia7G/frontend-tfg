@@ -16,9 +16,7 @@ import {
   PermissionStatus,
 } from "expo-image-picker";
 
-
-const AgregarFotos = ({imagenesGuardadas, setImagenesGuardadas}) => {
-  
+const AgregarFotos = ({ imagenesGuardadas, setImagenesGuardadas }) => {
   const [statusPermisos, requestPermisos] = useCameraPermissions();
 
   async function verifyPermissions() {
@@ -54,14 +52,14 @@ const AgregarFotos = ({imagenesGuardadas, setImagenesGuardadas}) => {
       allowsMultipleSelection: true,
       selectionLimit: 3,
       aspect: [4, 3],
-      quality: 1,
+      //quality: 0.5,
+      base64: true
     });
-
+    // console.log("Martin puto"+imagenes);
+    // console.log(JSON.stringify(imagenes));
     if (!imagenes.canceled) {
       setImagenesGuardadas(
-        imagenes.assets.map((img) => {
-          return img.uri;
-        })
+        imagenes.assets
       );
     }
   };
@@ -82,7 +80,7 @@ const AgregarFotos = ({imagenesGuardadas, setImagenesGuardadas}) => {
         imagenesGuardadas.map((item, index) => (
           <Image
             key={index}
-            source={{ uri: item }}
+            source={{ uri: item.uri }}
             style={styles.imagenSeleccionada}
           />
         ))}
