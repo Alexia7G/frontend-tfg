@@ -13,8 +13,7 @@ const Card = ({ titulo, direccion, onPress, imagen }) => {
         <Text style={styles.titulo}>{titulo}</Text>
         <Image
           style={styles.imagen}
-          source={require("../assets/images/restaurant.jpg")}
-          //source={imagen}
+          source={{uri: imagen}}
         />
         <Estrellas />
         <Text style={styles.direccion}>{direccion}</Text>

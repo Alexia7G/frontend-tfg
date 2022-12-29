@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, FlatList, Button, Image, RefreshControl } from "react-native";
-import { getEstablecimientos, getImagenesXId } from "../api";
+import { getEstablecimientos, getImagenesXId, URL_BASE } from "../api";
 import { useNavigation } from "@react-navigation/native";
 import SelectList from "../componentes/Dropdownlist";
 import InputConIcono from "../componentes/InputConIcono";
@@ -62,19 +62,23 @@ const InicioScreen = () => {
       });
     }
 
-    const press = async () => {
-      //console.log(imagenes[0].ruta);
-      // <Image style={{width: 100, height: 50, borderWidth: 1, borderColor: 'red'}}  source={{uri: `data:image/jpeg;base64,${imagenes[0].data}`}} />
-    };
+    const urlImg = `${URL_BASE}/uploads/${itemData.item.id}_imagen_0`;
 
     return (
       <Card
         titulo={itemData.item.nombre}
         direccion={`${itemData.item.calle} ${itemData.item.nroCalle}`}
         onPress={seleccionarLugar}
+        imagen={urlImg}
       />
     );
   }
+
+  const press = () => {
+    //console.log(imagenes[0].ruta);
+    //console.log("first")
+    // <Image style={{width: 100, height: 50, borderWidth: 1, borderColor: 'red'}}  source={{uri: `data:image/jpeg;base64,${imagenes[0].data}`}} />
+  };
 
   const onRefresh = () => {
     setRefresh(true);
@@ -110,8 +114,8 @@ const InicioScreen = () => {
           </View>
         </View>
         */}
-      {/* <Button title="prueba" onPress={press} /> */}
-
+      {/* <Button title="prueba" onPress={press} />  */}
+      {/* <Image style={styles.logo} source={{uri: `${URL_BASE}/uploads/${}_imagen_0`}} /> */}
       <View style={styles.fila3}>
         <FlatList
           style={styles.flatLit}
@@ -163,5 +167,9 @@ const styles = StyleSheet.create({
   flatLit: {
     marginBottom: 50,
     marginTop: 15,
+  },
+  logo: {
+    width: 66,
+    height: 58,
   },
 });

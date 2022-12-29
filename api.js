@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL_BASE = "https://dc21-190-11-151-195.sa.ngrok.io";
+export const URL_BASE = "https://dc21-190-11-151-195.sa.ngrok.io";
 
 // --------------------------USUARIO--------------------------
 async function authenticate(mode, email, password) {
@@ -54,7 +54,7 @@ export const guardarEstablecimiento = async (data) => {
 
 // --------------------------IMAGENES--------------------------
 export const getImagenesXId = async () => {
-  const res = await fetch(`${URL_BASE}/imagen/10`, {
+  const res = await fetch(`${URL_BASE}/imagen/22`, {
     method: "GET",
   });
   return await res.json();
