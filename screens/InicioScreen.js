@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Button, Image } from "react-native";
+import { StyleSheet, Text, View, FlatList, Button, Image, RefreshControl } from "react-native";
 import { getEstablecimientos, getImagenesXId } from "../api";
 import { useNavigation } from "@react-navigation/native";
 import SelectList from "../componentes/Dropdownlist";
@@ -9,12 +9,14 @@ import Colores from "../Constantes/colores";
 import Logo from "../componentes/Logo";
 import { useEffect, useState } from "react";
 
-const InicioScreen = ({ navigate }) => {
+const InicioScreen = () => {
   const navigation = useNavigation();
 
   const [listaEstablecimientos, setListaEstablecimientos] = useState([]);
 
   const [imagenes, setImagenes] = useState([]);
+
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     cargaEstablecimientos();
@@ -31,7 +33,7 @@ const InicioScreen = ({ navigate }) => {
         ciudad: es.es_ci_ciudad,
         calle: es.es_calle,
         nroCalle: es.es_nro_calle,
-        horarios: es.es_fecha_creacion,
+        horarios: es.es_horarios,
         descripcion: es.es_descripcion,
         telefono: es.es_telefono,
         insta: es.es_instagram,
@@ -53,23 +55,35 @@ const InicioScreen = ({ navigate }) => {
     setImagenes(lista);
   };
 
-  navigation.navigate("Detalle"/*, {
-    mealId: id,
-  }*/);
+  function renderList(itemData) {
+    function seleccionarLugar() {
+      navigation.navigate("Detalles", {
+        datos: itemData.item,
+      });
+    }
 
-  const press = async () => {
-    //console.log(imagenes[0].ruta);
-    //console.log(`data:image/jpeg;base64,${imagenes[0].data}`)
-    // <Image style={{width: 100, height: 50, borderWidth: 1, borderColor: 'red'}}  source={{uri: `data:image/jpeg;base64,${imagenes[0].data}`}} />
-    //console.log(listaEstablecimientos);
-    // listaEstablecimientos.map((item, index) => (
-    //   <Text
-    //   key={index}>{item.es_establecimiento}</Text>
-    // ))
-  };
+    const press = async () => {
+      //console.log(imagenes[0].ruta);
+      // <Image style={{width: 100, height: 50, borderWidth: 1, borderColor: 'red'}}  source={{uri: `data:image/jpeg;base64,${imagenes[0].data}`}} />
+    };
 
-  const detalleEstablecimiento = () => {
-    navigation.navigate("CuentaScreen");
+    return (
+      <Card
+        titulo={itemData.item.nombre}
+        direccion={`${itemData.item.calle} ${itemData.item.nroCalle}`}
+        onPress={seleccionarLugar}
+      />
+    );
+  }
+
+  const onRefresh = () => {
+    setRefresh(true);
+
+    setTimeout(() => {
+      cargaEstablecimientos();
+      cargaImagenes();
+      setRefresh(false);
+    }, 1000);
   };
 
   return (
@@ -85,46 +99,33 @@ const InicioScreen = ({ navigate }) => {
         />
       </View>
       {/* 
-      <View style={styles.fila2}>
-        <View style={styles.contenedorColumnas}>
-          <View style={styles.div}>
-            <SelectList />
-          </View>
-          <View style={styles.div}>
-            <SelectList />
+        <View style={styles.fila2}>
+          <View style={styles.contenedorColumnas}>
+            <View style={styles.div}>
+              <SelectList />
+            </View>
+            <View style={styles.div}>
+              <SelectList />
+            </View>
           </View>
         </View>
-      </View>
-      */}
+        */}
       {/* <Button title="prueba" onPress={press} /> */}
 
       <View style={styles.fila3}>
         <FlatList
-        style={styles.flatLit}
+          style={styles.flatLit}
           data={listaEstablecimientos}
           numColumns={2}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Card
-              titulo={item.nombre}
-              direccion={`${item.calle} ${item.nroCalle}`}
-              onPress={detalleEstablecimiento}
+          renderItem={renderList}
+          refreshControl={
+            <RefreshControl
+              refreshing={refresh}
+              onRefresh={() => onRefresh()}
             />
-          )}
+          }
         />
-
-        {/* <View style={styles.contenedorColumnas}>
-          
-          <View style={styles.divContenido}>
-            <Card />
-            <Card />
-          </View>
-          <View style={styles.divContenido}>
-            <Card />
-            <Card />
-            <Card />
-          </View>
-        </View> */}
       </View>
     </View>
   );
@@ -154,22 +155,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 15,
   },
-  contenedorColumnas: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    flex: 1,
-  },
   div: {
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
   },
-  divContenido: {
-    alignItems: "center",
-    flex: 1,
-  },
   flatLit: {
     marginBottom: 50,
-    marginTop: 15
-  }
+    marginTop: 15,
+  },
 });

@@ -1,9 +1,9 @@
 import { Pressable, StyleSheet, Image } from "react-native";
 import React from "react";
 
-const BotonAtras = ({ style }) => {
+const BotonAtras = ({ style, onPress }) => {
   return (
-    <Pressable style={({ pressed }) => pressed && styles.pressed}>
+    <Pressable style={({ pressed }) => pressed && styles.pressed} onPress={onPress}>
       <Image source={require("../../assets/images/atras.png")} style={style} />
     </Pressable>
   );

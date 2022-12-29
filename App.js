@@ -16,6 +16,7 @@ import MapaScreen from "./screens/MapaScreen";
 import CuentaScreen from "./screens/CuentaScreen";
 import FavoritosScreen from "./screens/FavoritosScreen";
 import NuevoEstablecimientoScreen from "./screens/NuevoEstablecimientoScreen";
+import DetalleScreen from "./screens/DetalleScreen";
 
 import Colores from "./Constantes/colores";
 import LoginScreen from "./screens/LoginScreen";
@@ -66,8 +67,7 @@ function VistaDeslogueado() {
     </ImageBackground>
   );
 }
-
-function VistaLogueado() {
+function Aux() {
   const authCxt = useContext(AuthContext);
   return (
     <ImageBackground
@@ -75,94 +75,108 @@ function VistaLogueado() {
       resizeMode="cover"
       style={styles.ImageBackgroundLogueado}
     >
-      <BottonTab.Navigator
-        initialRouteName="Inicio"
-        screenOptions={{
-          tabBarActiveTintColor: "#FFFFFF",
-          tabBarInactiveTintColor: "#FFFFFF77",
-          tabBarActiveBackgroundColor: Colores.principal,
-          tabBarInactiveBackgroundColor: Colores.principal,
+    <Stack.Navigator initialRouteName="Menu">
+      <Stack.Screen
+        name="Menu"
+        component={VistaLogueado}
+        options={{
+          headerShown: false,
         }}
-      >
-        <BottonTab.Screen
-          name="Inicio"
-          component={InicioScreen}
-          options={{
-            title: "INICIO",
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" color={color} size={size} />
-            ),
-          }}
-        />
-        <BottonTab.Screen
-          name="Mapa"
-          component={MapaScreen}
-          options={{
-            title: "VISTA MAPA",
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="map-marked-alt" size={size} color={color} />
-            ),
-          }}
-        />
-        <BottonTab.Screen
-          name="Cuenta"
-          component={CuentaScreen}
-          options={{
-            title: "MI CUENTA",
-            //headerShown: false,
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="account-circle-outline"
-                color={color}
-                size={30}
-              />
-            ),
-            headerRight: ({ tintColor }) => (
-              <Ionicons
-                name="exit"
-                size={24}
-                color={tintColor}
-                onPress={authCxt.logout}
-              />
-            ),
-          }}
-        />
-        <BottonTab.Screen
-          name="Favoritos"
-          component={FavoritosScreen}
-          options={{
-            title: "FAVORITOS",
-            headerShown: false,
-            tabBarIcon: ({ focused }) => (
-              <IconoFavoritos
-                style={[
-                  focused ? styles.activo : styles.inactivo2,
-                  styles.tamFavorito,
-                ]}
-              />
-            ),
-          }}
-        />
-        <BottonTab.Screen
-          name="Agregar"
-          component={NuevoEstablecimientoScreen}
-          options={{
-            headerShown: false,
-            title: "",
-            tabBarIcon: ({ focused }) => (
-              <IconoMas
-                style={[
-                  focused ? styles.activo : styles.inactivo,
-                  styles.flotante,
-                ]}
-              />
-            ),
-          }}
-        />
-      </BottonTab.Navigator>
+      />
+      <Stack.Screen
+        name="Detalles"
+        component={DetalleScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
     </ImageBackground>
+  );
+}
+
+function VistaLogueado() {
+  const authCxt = useContext(AuthContext);
+  return (
+    <BottonTab.Navigator
+      initialRouteName="Inicio"
+      screenOptions={{
+        tabBarActiveTintColor: "#FFFFFF",
+        tabBarInactiveTintColor: "#FFFFFF77",
+        tabBarActiveBackgroundColor: Colores.principal,
+        tabBarInactiveBackgroundColor: Colores.principal,
+      }}
+    >
+      <BottonTab.Screen
+        name="Inicio"
+        component={InicioScreen}
+        options={{
+          title: "INICIO",
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <BottonTab.Screen
+        name="Mapa"
+        component={MapaScreen}
+        options={{
+          title: "VISTA MAPA",
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="map-marked-alt" size={size} color={color} />
+          ),
+        }}
+      />
+      <BottonTab.Screen
+        name="Cuenta"
+        component={CuentaScreen}
+        options={{
+          title: "MI CUENTA",
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="account-circle-outline"
+              color={color}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <BottonTab.Screen
+        name="Favoritos"
+        component={FavoritosScreen}
+        options={{
+          title: "FAVORITOS",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <IconoFavoritos
+              style={[
+                focused ? styles.activo : styles.inactivo2,
+                styles.tamFavorito,
+              ]}
+            />
+          ),
+        }}
+      />
+      <BottonTab.Screen
+        name="Agregar"
+        component={NuevoEstablecimientoScreen}
+        options={{
+          headerShown: false,
+          title: "",
+          tabBarIcon: ({ focused }) => (
+            <IconoMas
+              style={[
+                focused ? styles.activo : styles.inactivo,
+                styles.flotante,
+              ]}
+            />
+          ),
+        }}
+      />
+    </BottonTab.Navigator>
   );
 }
 
@@ -171,7 +185,7 @@ function Navigation() {
   return (
     <NavigationContainer theme={navTheme}>
       {!authCtx.isAuthenticated && <VistaDeslogueado />}
-      {authCtx.isAuthenticated && <VistaLogueado />}
+      {authCtx.isAuthenticated && <Aux />}
     </NavigationContainer>
   );
 }

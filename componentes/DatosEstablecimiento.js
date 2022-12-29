@@ -9,7 +9,7 @@ import BotonAgregar from "./Botones/BotonAgregar";
 import Comentarios from "./Comentarios";
 import Puntuar from "./Botones/Puntuar";
 
-const DatosEstablecimiento = () => {
+const DatosEstablecimiento = ({ direccion, horarios, descripcion, telefono, web, face, insta}) => {
   return (
     <View style={styles.contenedor}>
       <View style={styles.calificar}>
@@ -19,7 +19,7 @@ const DatosEstablecimiento = () => {
       <View style={styles.lineaCalificar}></View>
       <View style={styles.direccion}>
         <Ionicons name="location-sharp" size={17} color={Colores.secundario} />
-        <Text style={styles.texto}>Dirección del establecimiento</Text>
+        <Text style={styles.texto}>{direccion}</Text>
         <Pressable style={({ pressed }) => pressed && styles.pressed}>
           <FontAwesome5
             name="map-marked-alt"
@@ -34,12 +34,11 @@ const DatosEstablecimiento = () => {
         <Text style={styles.texto}>Horarios</Text>
       </View>
       <View style={styles.horas}>
-        <Text style={styles.texto}>Lunes a viernes de 9 a 18h</Text>
-        <Text style={styles.texto}>Sábados de 10 a 13h</Text>
+        <Text style={styles.texto}>{horarios}</Text>
       </View>
       <View style={styles.descripcion}>
         <Text style={styles.textoDescripcion}>
-          Descripción de establecimiento
+          {descripcion}
         </Text>
       </View>
       <View style={styles.lineaConIcono}>
@@ -48,7 +47,7 @@ const DatosEstablecimiento = () => {
           size={17}
           color={Colores.secundario}
         />
-        <Text style={styles.texto}>Teléfono</Text>
+        <Text style={styles.texto}>{telefono}</Text>
       </View>
       <View style={styles.lineaConIcono}>
         <MaterialCommunityIcons
@@ -56,15 +55,15 @@ const DatosEstablecimiento = () => {
           size={18}
           color={Colores.secundario}
         />
-        <Text style={styles.texto}>Página web</Text>
+        <Text style={styles.texto}>{web}</Text>
       </View>
       <View style={styles.lineaConIcono}>
         <Ionicons name="logo-facebook" size={17} color={Colores.secundario} />
-        <Text style={styles.texto}>Facebook</Text>
+        <Text style={styles.texto}>{face}</Text>
       </View>
       <View style={styles.lineaConIcono}>
         <Ionicons name="logo-instagram" size={18} color={Colores.secundario} />
-        <Text style={styles.texto}>Instagram</Text>
+        <Text style={styles.texto}>{insta}</Text>
       </View>
 
       <View style={styles.lineas}>

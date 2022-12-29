@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Image, Button } from "react-native";
+import React, { useEffect, useState } from "react";
 import BotonAtras from "../componentes/Botones/BotonAtras";
 import Estrellas from "../componentes/Estrellas";
 import BotonFavOn from "../componentes/Botones/BotonFavOn";
@@ -9,15 +9,22 @@ import BotonEditar from "../componentes/Botones/BotonEditar";
 import DatosEstablecimiento from "../componentes/DatosEstablecimiento";
 import Logo from "../componentes/Logo";
 
-const DetalleScreen = () => {
+const DetalleScreen = ({ route, navigation }) => {
+  const datos = route.params.datos;
+  const [lugarSeleccionado, setLugarSeleccionado] = useState({});
+
+  useEffect(() => {
+    setLugarSeleccionado(datos);
+  }, []);
+
   return (
     <View style={styles.contenedor}>
       <Logo />
       <View style={styles.fila1}>
-        <BotonAtras style={styles.botonAtras} />
+        <BotonAtras style={styles.botonAtras} onPress={() => navigation.goBack()}/>
         <View style={styles.contenedorHeader}>
           <View style={styles.contenedorTitulo}>
-            <Text style={styles.titulo}>NOMBRE DEL ESTABLECIMIENTO</Text>
+            <Text style={styles.titulo}>{lugarSeleccionado.nombre}</Text>
           </View>
           <View style={styles.contenedorEstrellas}>
             <Estrellas style={styles.estrellas} />
@@ -33,7 +40,15 @@ const DetalleScreen = () => {
         <BotonEditar style={styles.botonEditar} />
       </View>
       <View style={styles.fila3}>
-        <DatosEstablecimiento />
+        <DatosEstablecimiento
+          direccion={`${lugarSeleccionado.calle} ${lugarSeleccionado.nroCalle}`}
+          horarios={lugarSeleccionado.horarios}
+          descripcion={lugarSeleccionado.descripcion}
+          telefono={lugarSeleccionado.telefono}
+          web={lugarSeleccionado.web}
+          face={lugarSeleccionado.face}
+          insta={lugarSeleccionado.insta}
+        />
       </View>
     </View>
   );
@@ -78,7 +93,7 @@ const styles = StyleSheet.create({
   titulo: {
     textAlign: "center",
     color: "white",
-    fontSize: 18,
+    fontSize: 25,
   },
   contenedorEstrellas: {
     flex: 2,

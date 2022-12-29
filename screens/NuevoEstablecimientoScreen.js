@@ -102,8 +102,9 @@ const NuevoEstablecimientoScreen = () => {
       Alert.alert(
         "Registro",
         `El establecimiento ${establecimiento.nombre} ha sido registrado`,
-        [{ text: "OK", style: "default", onPress: borrarDatos }]
+        [{ text: "OK", style: "default", onPress: borrarDatos() }]
       );
+      //borrarDatos();
     } catch (error) {
       console.error(error);
     }
@@ -113,8 +114,8 @@ const NuevoEstablecimientoScreen = () => {
     setImagenesGuardadas([]);
     setEstablecimiento({
       nombre: "",
-      categoria: 0,
-      ciudad: 0,
+      categoria: establecimiento.categoria,
+      ciudad: establecimiento.ciudad,
       calle: "",
       nroCalle: 0,
       horarios: "",
@@ -124,8 +125,6 @@ const NuevoEstablecimientoScreen = () => {
       face: "",
       web: "",
     });
-
-    cambiarDato("categoria", 0)
   };
 
   const cambiarDato = (nombre, valor) => {
