@@ -4,12 +4,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AuthContext = createContext({
   token: "",
   isAuthenticated: false,
-  authenticate: (token) => {},
+  usuario: [],
+  authenticate: (dato) => {},
   logout: () => {},
 });
 
 function AuthContextProvider({ children }) {
   const [authToken, setAuthToken] = useState(); //no pongo valor inicial, porque al inicio no hay token
+  const [usuario, setUsuario] = useState([]);
 
   //NO FUNCIONA
   // useEffect(() => {
@@ -20,15 +22,16 @@ function AuthContextProvider({ children }) {
   //       setAuthToken(storedToken);
   //     }
   //   }
-  //   fetchToken();    
+  //   fetchToken();
   // }, []);
 
-  function authenticate(token) {
-    setAuthToken(token);
+  function authenticate(dato) {
+    setAuthToken(dato.token);
+    setUsuario(dato);
 
     //NO FUNCIONA
     //así se almacena el token en el almacenamiento del cel
-    AsyncStorage.setItem("token", token); //1 parámetro es el nombre
+    //AsyncStorage.setItem("token", token); //1 parámetro es el nombre
   }
   function logout(token) {
     setAuthToken(null);
@@ -36,6 +39,7 @@ function AuthContextProvider({ children }) {
 
   const value = {
     token: authToken,
+    usuario: usuario,
     isAuthenticated: !!authToken, //si authtoken no tiene dato va a ser false
     authenticate: authenticate,
     logout: logout,

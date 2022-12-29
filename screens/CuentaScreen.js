@@ -10,6 +10,9 @@ import Colores from "../Constantes/colores";
 
 const CuentaScreen = () => {
   const authCxt = useContext(AuthContext);
+
+  const email = authCxt.usuario.email;
+
   return (
     <View style={styles.contenedor}>
       <Logo />
@@ -34,7 +37,7 @@ const CuentaScreen = () => {
           size={300}
           color={Colores.secundario}
         />
-        <Text style={styles.email}>test@test.com</Text>
+        <Text style={styles.email}>{email}</Text>
       </View>
     </View>
   );
@@ -78,6 +81,6 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 20,
     color: Colores.principal,
-    fontWeight: 'bold'
-  }
+    fontWeight: "bold",
+  },
 });

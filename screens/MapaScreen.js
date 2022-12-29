@@ -18,6 +18,7 @@ const MapaScreen = () => {
     <View>
       <View style={styles.contenedor1}>
         <Logo />
+        <Text style={styles.titulo}>VISTA MAPA</Text>
       </View>
       <View style={styles.contenedor2}>
         <MapView style={styles.map} initialRegion={region}>
@@ -41,16 +42,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contenedor1: {
-    //marginTop: 235,
-    //height: 510,
-    borderColor: "black",
-    borderWidth: 2,
-    flex: 1,
+    marginTop: 30,
   },
   contenedor2: {
-    marginTop: 235,
+    marginTop: 95,
     height: 510,
     borderColor: Colores.secundario,
     borderWidth: 2,
+  },
+  titulo: {
+    color: "white",
+    fontSize: 30,
+    marginTop: 70,
+    marginLeft: 105
   },
 });

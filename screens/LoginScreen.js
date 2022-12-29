@@ -14,8 +14,8 @@ function LoginScreen() {
  const loginHandler = async ({ email, password }) => {
     setIsAuthenticating(true); //está autenticando
     try {
-      const token = await login(email, password);
-      authCtx.authenticate(token);
+      const result = await login(email, password);
+      authCtx.authenticate(result);
     } catch (error) {
       Alert.alert(
         "Fallo la autenticación",

@@ -12,7 +12,13 @@ async function authenticate(mode, email, password) {
   });
   const token = "da5a5d5ad5a5da6"; //response.data.idToken;
   //console.log(response.data);
-  return token;
+  const usuario = {
+    token: token,
+    email: email,
+    id: 1
+  }
+  return usuario;
+  //return token;
 }
 
 export function createUser(email, password) {
