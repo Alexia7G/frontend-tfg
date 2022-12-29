@@ -2,11 +2,11 @@ import { StyleSheet } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import Colores from "../Constantes/colores";
 
-const Dropdownlist = ({ placeholder, setSelected, data, onSelect }) => {
+const Dropdownlist = ({ placeholder, setSelected, data, onSelect, styleTexto }) => {
   return (
     <SelectList
       boxStyles={styles.contenedorBox}
-      inputStyles={styles.seleccionado}
+      inputStyles={[styles.seleccionado, styleTexto]}
       dropdownTextStyles={styles.opciones}
       setSelected={setSelected}
       data={data}
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     marginTop: -2,
   },
   seleccionado: {
-    color: "#484949",
     marginTop: -2,
   },
   opciones: {

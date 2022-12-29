@@ -12,16 +12,16 @@ function AuthContextProvider({ children }) {
   const [authToken, setAuthToken] = useState(); //no pongo valor inicial, porque al inicio no hay token
 
   //NO FUNCIONA
-  useEffect(() => {
-    async function fetchToken() {
-      const storedToken = await AsyncStorage.get("token");
+  // useEffect(() => {
+  //   async function fetchToken() {
+  //     const storedToken = await AsyncStorage.get("token");
 
-      if (storedToken) {
-        setAuthToken(storedToken);
-      }
-    }
-    fetchToken();    
-  }, []);
+  //     if (storedToken) {
+  //       setAuthToken(storedToken);
+  //     }
+  //   }
+  //   fetchToken();    
+  // }, []);
 
   function authenticate(token) {
     setAuthToken(token);

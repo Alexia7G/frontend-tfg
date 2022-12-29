@@ -46,7 +46,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
   return (
     <View>
       <Input
-        placeholder="Email Address"
+        placeholder="Correo electrónico"
         placeholderTextColor={placeholderColor}
         onChangeText={updateInputValueHandler.bind(this, "email")}
         value={enteredEmail}
@@ -56,7 +56,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
       />
       {!isLogin && (
         <Input
-          placeholder="Confirm Email Address"
+          placeholder="Confirmar correo electrónico"
           placeholderTextColor={placeholderColor}
           onChangeText={updateInputValueHandler.bind(this, "confirmEmail")}
           value={enteredConfirmEmail}
@@ -66,7 +66,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         />
       )}
       <Input
-        placeholder="Password"
+        placeholder="Contraseña"
         placeholderTextColor={placeholderColor}
         onChangeText={updateInputValueHandler.bind(this, "password")}
         secure
@@ -75,7 +75,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
       />
       {!isLogin && (
         <Input
-          placeholder="Confirm Password"
+          placeholder="Confirmar contraseña"
           placeholderTextColor={placeholderColor}
           onChangeText={updateInputValueHandler.bind(this, "confirmPassword")}
           secure

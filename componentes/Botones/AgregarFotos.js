@@ -53,14 +53,12 @@ const AgregarFotos = ({ imagenesGuardadas, setImagenesGuardadas }) => {
       selectionLimit: 3,
       aspect: [4, 3],
       //quality: 0.5,
-      base64: true
+      base64: true,
     });
     // console.log("Martin puto"+imagenes);
     // console.log(JSON.stringify(imagenes));
     if (!imagenes.canceled) {
-      setImagenesGuardadas(
-        imagenes.assets
-      );
+      setImagenesGuardadas(imagenes.assets);
     }
   };
 
@@ -76,14 +74,16 @@ const AgregarFotos = ({ imagenesGuardadas, setImagenesGuardadas }) => {
           style={styles.imagen}
         />
       </Pressable>
-      {imagenesGuardadas.length > 0 &&
-        imagenesGuardadas.map((item, index) => (
-          <Image
-            key={index}
-            source={{ uri: item.uri }}
-            style={styles.imagenSeleccionada}
-          />
-        ))}
+      <View style={styles.contenedorImagenes}>
+        {imagenesGuardadas.length > 0 &&
+          imagenesGuardadas.map((item, index) => (
+            <Image
+              key={index}
+              source={{ uri: item.uri }}
+              style={styles.imagenSeleccionada}
+            />
+          ))}
+      </View>
     </View>
   );
 };
@@ -136,5 +136,9 @@ const styles = StyleSheet.create({
     borderColor: Colores.secundario,
     borderWidth: 1,
     borderRadius: 6,
+    margin: 2
+  },
+  contenedorImagenes: {
+    flexDirection: 'row'
   },
 });

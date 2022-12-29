@@ -1,5 +1,13 @@
-import { StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
-import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TextInput,
+  Alert,
+  RefreshControl,
+} from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
 import Input from "../componentes/Input";
 import Colores from "../Constantes/colores";
 import Dropdownlist from "../componentes/Dropdownlist";
@@ -7,6 +15,7 @@ import AgregarFotos from "../componentes/Botones/AgregarFotos";
 import BotonPrincipal from "../componentes/Botones/BotonPrincipal";
 import Logo from "../componentes/Logo";
 import { getCategorias, getCiudades, guardarEstablecimiento } from "../api";
+import Cargando from "../componentes/Cargando";
 
 const NuevoEstablecimientoScreen = () => {
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
@@ -33,12 +42,16 @@ const NuevoEstablecimientoScreen = () => {
   const [listaCiudades, setListaCiudades] = useState([]);
   const [ciudadSeleccionada, setCiudadSeleccionada] = useState({});
 
+  const [estaGuardando, setEstaGuardando] = useState(false);
+
+  const [refresh, setRefresh] = useState(false);
+
   const placeholderColor = Colores.gris;
 
   useEffect(() => {
     cargarCategorias();
     cargarCiudades();
-  }, [categoriaSeleccionada]);
+  }, []);
 
   const cargarCategorias = async () => {
     try {
@@ -66,23 +79,67 @@ const NuevoEstablecimientoScreen = () => {
 
   const nvoEstablecimiento = async () => {
     try {
+      setEstaGuardando(true);
+
       const formData = new FormData();
       formData.append("establecimiento", JSON.stringify(establecimiento));
 
       let imgData = imagenesGuardadas.map((img, index) => {
-        return { uri: img.uri, base64: img.base64 , name: `imagen_${index}`, type: "image/jpeg" };
+        return {
+          uri: img.uri,
+          base64: img.base64,
+          name: `imagen_${index}`,
+          type: "image/jpeg",
+        };
       });
 
       formData.append("imagenes", JSON.stringify(imgData));
 
-      await guardarEstablecimiento(formData);
+      guardarOk = await guardarEstablecimiento(formData);
+
+      setEstaGuardando(false);
+
+      Alert.alert(
+        "Registro",
+        `El establecimiento ${establecimiento.nombre} ha sido registrado`,
+        [{ text: "OK", style: "default", onPress: borrarDatos }]
+      );
     } catch (error) {
       console.error(error);
     }
   };
 
-  const cambiarDato = (nombre, valor) => 
+  const borrarDatos = () => {
+    setImagenesGuardadas([]);
+    setEstablecimiento({
+      nombre: "",
+      categoria: 0,
+      ciudad: 0,
+      calle: "",
+      nroCalle: 0,
+      horarios: "",
+      descripcion: "",
+      telefono: "",
+      insta: "",
+      face: "",
+      web: "",
+    });
+
+    cambiarDato("categoria", 0)
+  };
+
+  const cambiarDato = (nombre, valor) => {
     setEstablecimiento({ ...establecimiento, [nombre]: valor });
+  };
+
+  const onRefresh = () => {
+    setRefresh(true);
+
+    setTimeout(() => {
+      borrarDatos();
+      setRefresh(false);
+    }, 1000);
+  };
 
   return (
     <View style={styles.contenedor}>
@@ -91,7 +148,11 @@ const NuevoEstablecimientoScreen = () => {
         <Text style={styles.titulo}>NUEVO ESTABLECIMIENTO</Text>
       </View>
       <View style={styles.fila2}>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refresh} onRefresh={() => onRefresh()} />
+          }
+        >
           <Input
             placeholderColor={placeholderColor}
             placeholder="Nombre"
@@ -101,12 +162,22 @@ const NuevoEstablecimientoScreen = () => {
           />
           <Dropdownlist
             placeholder="Seleccionar categoría"
+            styleTexto={
+              categoriaSeleccionada > 0
+                ? styles.dropdownlistActivo
+                : styles.dropdownlistInactivo
+            }
             data={listaCategorias}
             setSelected={setCategoriaSeleccionada}
             onSelect={() => cambiarDato("categoria", categoriaSeleccionada)}
           />
           <Dropdownlist
             placeholder="Seleccionar ciudad"
+            styleTexto={
+              ciudadSeleccionada > 0
+                ? styles.dropdownlistActivo
+                : styles.dropdownlistInactivo
+            }
             data={listaCiudades}
             setSelected={setCiudadSeleccionada}
             onSelect={() => cambiarDato("ciudad", ciudadSeleccionada)}
@@ -180,6 +251,13 @@ const NuevoEstablecimientoScreen = () => {
             setImagenesGuardadas={setImagenesGuardadas}
             imagenesGuardadas={imagenesGuardadas}
           />
+          {estaGuardando && (
+            <Cargando
+              styleContenedor={styles.contenedorCargando}
+              color={Colores.rosaActivo}
+              styleIndicador={styles.indicador}
+            />
+          )}
           <BotonPrincipal texto="AGREGAR" onPress={nvoEstablecimiento} />
         </ScrollView>
       </View>
@@ -232,5 +310,24 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     height: 42,
     marginLeft: 5,
+  },
+  contenedorCargando: {
+    position: "absolute",
+    marginVertical: 250,
+    marginHorizontal: 150,
+  },
+  mensaje: {
+    fontSize: 16,
+    marginBottom: 12,
+    color: Colores.principal,
+  },
+  indicador: {
+    transform: [{ scaleX: 2 }, { scaleY: 2 }],
+  },
+  dropdownlistActivo: {
+    color: "black",
+  },
+  dropdownlistInactivo: {
+    color: Colores.gris,
   },
 });

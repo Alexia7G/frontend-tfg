@@ -4,19 +4,20 @@ import React from "react";
 import Colores from "../Constantes/colores";
 import Estrellas from "./Estrellas";
 
-const Card = () => {
+const Card = ({ titulo, direccion, onPress, imagen }) => {
   return (
     <Pressable
-      style={({ pressed }) => [styles.item, pressed && styles.pressed]}
+      style={({ pressed }) => [styles.item, pressed && styles.pressed]} onPress={onPress}
     >
       <View>
-        <Text style={styles.titulo}>Titulo</Text>
+        <Text style={styles.titulo}>{titulo}</Text>
         <Image
           style={styles.imagen}
-          source={require("../assets/images/restaurant.jpg")}
+          //source={require("../assets/images/restaurant.jpg")}
+          source={imagen}
         />
         <Estrellas />
-        <Text style={styles.direccion}>Dirección 1234</Text>
+        <Text style={styles.direccion}>{direccion}</Text>
       </View>
     </Pressable>
   );
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: 170,
+    marginRight: 10,
   },
   imagen: {
     width: 170,

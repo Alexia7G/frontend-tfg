@@ -2,15 +2,16 @@ import AuthContent from "../componentes/Auth/AuthContent";
 import { useState, useContext } from "react";
 import Cargando from "../componentes/Cargando";
 import { login } from "../api";
-import { Alert } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { AuthContext } from "../store/auth-context";
+import Colores from "../Constantes/colores";
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false); //inicia falso porque cuando la pantalla se carga por primera vez no está autenticando
 
   const authCtx = useContext(AuthContext);
 
-  async function loginHandler({ email, password }) {
+ const loginHandler = async ({ email, password }) => {
     setIsAuthenticating(true); //está autenticando
     try {
       const token = await login(email, password);
@@ -25,7 +26,14 @@ function LoginScreen() {
   }
 
   if (isAuthenticating) {
-    return <Cargando mensaje="Iniciando sesión..." />;
+    return (
+      <Cargando
+        mensaje="Iniciando sesión..."
+        styleContenedor={styles.contenedor}
+        styleMensaje={styles.mensaje}
+        color="white"
+      />
+    );
   }
 
   return <AuthContent isLogin onAuthenticate={loginHandler} />;
@@ -33,3 +41,17 @@ function LoginScreen() {
 
 export default LoginScreen;
 
+const styles = StyleSheet.create({
+  contenedor: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 32,
+    backgroundColor: Colores.principal,
+  },
+  mensaje: {
+    fontSize: 16,
+    marginBottom: 12,
+    color: "white",
+  },
+});
